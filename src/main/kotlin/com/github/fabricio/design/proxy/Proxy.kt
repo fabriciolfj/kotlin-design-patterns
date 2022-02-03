@@ -11,6 +11,7 @@ fun main() {
     println(cat.image.size)
 }
 
+//no caso acho que o proxy vai bater calcular o tamanho da url, no primeiro momento sim, ja no segundo ele pega na memoria (cache)
 data class CatImage(
     val thumbnailUrl: String,
     val url: String
