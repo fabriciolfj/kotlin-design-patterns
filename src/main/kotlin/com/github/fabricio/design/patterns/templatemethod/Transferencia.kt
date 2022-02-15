@@ -1,6 +1,8 @@
 package com.github.fabricio.design.patterns.templatemethod
 
-class Transferencia {
+import java.math.BigDecimal
+
+data class Transferencia(val origem: String, val destino: String, val valor: BigDecimal) {
 
     fun executar(reservaValor: () -> Unit,
                  debitarValor: () -> Unit,
@@ -14,7 +16,8 @@ class Transferencia {
             println("Conta destino: $conta")
         }
 
-        reservaValor()
+        registrarContaDestino(origem)
+        registrarContaOrigem(destino)
         debitarValor()
         cobrarTaxa?.let { it() }
     }
