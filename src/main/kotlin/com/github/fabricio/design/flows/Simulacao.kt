@@ -2,9 +2,7 @@ package com.github.fabricio.design.flows
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -23,7 +21,7 @@ fun main() {
             }
         }
 
-        (1..4).forEach { id ->
+        /*(1..4).forEach { id ->
             delay(500)
             launch(Dispatchers.Default) {
                 numbersFlow.collect { number ->
@@ -31,6 +29,32 @@ fun main() {
                     println("Coroutine $id received $number")
                 }
             }
+        }*/
+
+        (1..4).forEach { id ->
+            delay(500)
+            launch(Dispatchers.Default) {
+                numbersFlow.buffer().collect {
+                    delay(1000)
+                    println("Coroutine $id received $it")
+                }
+            }
+        }
+
+        //pegando os mais recentes
+        val stock : Flow<Int> = flow {
+            var i =0
+            while(true) {
+                emit(i++)
+                delay(100)
+            }
+        }
+
+        var seconds = 0
+        stock.conflate().collect {
+            delay(100)
+            seconds++
+            println("$seconds seconds -> receied $it")
         }
     }
 }
