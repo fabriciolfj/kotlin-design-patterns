@@ -17,7 +17,7 @@ class Parse {
         }
 
         fun server(list: List<String>) : com.github.fabricio.design.patterns.abstractfactory.ServerConfigurationImpl {
-            val props = list.map { com.github.fabricio.design.patterns.abstractfactory.Parse.Companion.property(it) }
+            val props = list.map { com.github.fabricio.design.patterns.abstractfactory.Parse.property(it) }
                     .toList()
 
             return com.github.fabricio.design.patterns.abstractfactory.ServerConfigurationImpl(props)
